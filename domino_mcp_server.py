@@ -1,5 +1,6 @@
 # MCP Server functions that wrap the Domino API
 # Domino API docs, specifically to run a job here: https://docs.dominodatalab.com/en/latest/api_guide/8c929e/rest-api-reference/#_startJob
+# better docs: https://dominodatalab.github.io/api-docs/#/reference/project-runs-and-files/run-status/get-the-status-of-a-run
 # how to get your domino project ID: https://support.domino.ai/support/s/article/How-can-I-find-my-Project-ID-and-available-Hardware-Tier-IDs
 
 from typing import Dict, Any, List
