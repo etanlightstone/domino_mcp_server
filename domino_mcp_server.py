@@ -8,14 +8,18 @@ from mcp.server.fastmcp import FastMCP
 import requests
 import asyncio
 import os
+from dotenv import load_dotenv
 
-# Initialize the Fast MCP server
-mcp = FastMCP("domino_server")
+load_dotenv()
 
 # Load API key from environment variable
 domino_api_key = os.getenv("DOMINO_API_KEY")
 if not domino_api_key:
     raise ValueError("DOMINO_API_KEY environment variable not set.")
+
+# Initialize the Fast MCP server
+mcp = FastMCP("domino_server")
+
 
 
 @mcp.tool()
@@ -53,7 +57,6 @@ async def run_domino_job(user_name: str, project_name: str, run_command: str, ti
         project_name (str): The name of the Domino project.
         run_command (str): The command to run on the domino platform. Example: 'python my_script.py --arg1 arv1_val --arg2 arv2_val'
         title (str): A title of the job that helps later identify the job. Example: 'running training.py script'
-        tier (str | None, optional): The hardware tier to run the job on. Defaults to None (project default).
     """
     ### implementation goes here ###
     # Construct the API URL
@@ -96,12 +99,12 @@ async def run_domino_job(user_name: str, project_name: str, run_command: str, ti
 
     return result
 
-async def main():
-    # test project ID: 6806b69e1baf462351041f7f - No longer needed directly in the function call
-    print("making domino API call")
-    result = await run_domino_job(user_name='etan_lightstone', project_name='diabetes-predict', run_command='python diabetes_model.py', title='run2 test of diabetes model')
-    #result = await check_domino_job_run_result(user_name='etan_lightstone', project_name='diabetes-predict', run_id='6806c7e01baf462351041f9a')
-    print(result)
+# async def main():
+#     # test project ID: 6806b69e1baf462351041f7f - No longer needed directly in the function call
+#     print("making domino API call")
+#     result = await run_domino_job(user_name='etan_lightstone', project_name='diabetes-predict', run_command='python diabetes_model.py', title='run2 test of diabetes model')
+#     #result = await check_domino_job_run_result(user_name='etan_lightstone', project_name='diabetes-predict', run_id='6806c7e01baf462351041f9a')
+#     print(result)
 
 if __name__ == "__main__":
     # Initialize and run the server using stdio transport
