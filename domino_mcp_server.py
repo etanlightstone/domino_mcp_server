@@ -10,6 +10,7 @@ import asyncio
 import os
 from dotenv import load_dotenv
 import re
+import webbrowser
 
 load_dotenv()
 
@@ -185,6 +186,24 @@ async def run_domino_job(user_name: str, project_name: str, run_command: str, ti
         result = {"error": f"An unexpected error occurred: {e}"}
 
     return result
+
+@mcp.tool()
+def open_web_browser(url: str) -> bool:
+    """Opens the specified URL in the default web browser.
+
+    Args:
+        url: The URL to open.
+
+    Returns:
+        True if the browser was opened successfully, False otherwise.
+    """
+    try:
+        webbrowser.open_new_tab(url)
+        return True
+    except webbrowser.Error:
+        return False
+
+  
 
 # async def main():
 #     # test project ID: 6806b69e1baf462351041f7f - No longer needed directly in the function call
