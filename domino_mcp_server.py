@@ -16,6 +16,8 @@ load_dotenv()
 
 # Load API key from environment variable
 domino_api_key = os.getenv("DOMINO_API_KEY")
+domino_host = os.getenv("DOMINO_HOST")
+
 if not domino_api_key:
     raise ValueError("DOMINO_API_KEY environment variable not set.")
 
@@ -55,7 +57,7 @@ def _extract_and_format_mlflow_url(text: str, user_name: str, project_name: str)
         experiment_id = match.group(1)
         run_id = match.group(2)
         # Construct the new URL
-        new_url = f"https://cloud-dogfood.domino.tech/experiments/{user_name}/{project_name}/{experiment_id}/{run_id}"
+        new_url = f"{domino_host}/experiments/{user_name}/{project_name}/{experiment_id}/{run_id}"
         return new_url
     else:
         return None # Return None if the pattern is not found
@@ -70,7 +72,7 @@ async def check_domino_job_run_results(user_name: str, project_name: str, run_id
         project_name (str): The name of the Domino project.
         run_id (str): The run id of the job run to return the status of
     """
-    api_url = f"https://cloud-dogfood.domino.tech/v1/projects/{user_name}/{project_name}/run/{run_id}/stdout"
+    api_url = f"{domino_host}/v1/projects/{user_name}/{project_name}/run/{run_id}/stdout"
     headers = {
         "X-Domino-Api-Key": domino_api_key
     }
@@ -120,7 +122,7 @@ async def check_domino_job_run_status(user_name: str, project_name: str, run_id:
         project_name (str): The name of the Domino project.
         run_id (str): The run id of the job run to return the status of
     """
-    api_url = f"https://cloud-dogfood.domino.tech/v1/projects/{user_name}/{project_name}/runs/{run_id}"
+    api_url = f"{domino_host}/v1/projects/{user_name}/{project_name}/runs/{run_id}"
     headers = {
         "X-Domino-Api-Key": domino_api_key
     }
@@ -148,8 +150,8 @@ async def run_domino_job(user_name: str, project_name: str, run_command: str, ti
     """
     ### implementation goes here ###
     # Construct the API URL
-    # must be in this format: https://cloud-dogfood.domino.tech/v1/projects/user_name/project_name/runs
-    api_url = f"https://cloud-dogfood.domino.tech/v1/projects/{user_name}/{project_name}/runs"
+    # must be in this format: https://domino.host/v1/projects/user_name/project_name/runs
+    api_url = f"{domino_host}/v1/projects/{user_name}/{project_name}/runs"
 
     # Prepare the request headers
     headers = {
