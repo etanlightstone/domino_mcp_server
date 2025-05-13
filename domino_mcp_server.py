@@ -205,18 +205,80 @@ def open_web_browser(url: str) -> bool:
     except webbrowser.Error:
         return False
 
-  
+# @mcp.tool()
+# async def list_domino_datasets() -> List[Dict[str, Any]]:
+#     """List all datasets that are accessible. Useful to retrieve the ID of a dataset of interest.
+
+#     Returns:
+#         List of all datasets
+#     """
+#     api_url = f"{domino_host}/api/datasetrw/v2/datasets?limit=700"
+#     headers = {
+#         "X-Domino-Api-Key": domino_api_key
+#     }
+#     try:
+#         response = requests.get(api_url, headers=headers)
+#         response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
+#         result = response.json()
+#     except requests.exceptions.RequestException as e:
+#         result = {"error": f"API request failed: {e}"}
+#     except Exception as e:
+#         result = {"error": f"An unexpected error occurred: {e}"}
+
+#     filtered_datasets = list(filter(lambda ds: ds['dataset']['name'] != 'quick-start', result['datasets']))
+#     return filtered_datasets
+
+# @mcp.tool()
+# async def get_domino_dataset(dataset_id: str) -> Dict[str, Any]: 
+#     """Get details of a specific dataset from its id.
+#     Args:
+#         dataset_id: The id of the dataset to retrieve info about
+
+#     Returns:
+#         A dict of information about the dataset
+#     """
+#     api_url =f"{domino_host}/api/datasetrw/v1/datasets/{dataset_id}"
+#     headers = {
+#         "X-Domino-Api-Key": domino_api_key
+#     }
+#     try:
+#         response = requests.get(api_url, headers=headers)
+#         response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
+#         result = response.json()
+#     except requests.exceptions.RequestException as e:
+#         result = {"error": f"API request failed: {e}"}
+#     except Exception as e:
+#         result = {"error": f"An unexpected error occurred: {e}"}
+#     return result
+
+# @mcp.tool()
+# async def get_domino_dataset_snapshot(snapshot_id: str) -> Dict[str, Any]:
+#     #api_url =f"{domino_host}/api/datasetrw/v1/snapshots/{snapshot_id}"
+#     api_url =f"{domino_host}/v4/datasetrw/files/{snapshot_id}?path="
+#     headers = {
+#         "X-Domino-Api-Key": domino_api_key
+#     }
+#     try:
+#         response = requests.get(api_url, headers=headers)
+#         response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
+#         result = response.json()
+#     except requests.exceptions.RequestException as e:
+#         result = {"error": f"API request failed: {e}"}
+#     except Exception as e:
+#         result = {"error": f"An unexpected error occurred: {e}"}
+#     return result
 
 # async def main():
 #     # test project ID: 6806b69e1baf462351041f7f - No longer needed directly in the function call
 #     print("making domino API call")
 #     #result = await run_domino_job(user_name='etan_lightstone', project_name='diabetes-predict', run_command='python diabetes_model.py', title='run2 test of diabetes model')
 #     #result = await check_domino_job_run_status(user_name='etan_lightstone', project_name='diabetes-predict', run_id='6807cf2c3917d068b39de2b7')
-#     result = await check_domino_job_run_results(user_name='etan_lightstone', project_name='diabetes-predict', run_id='6807cf2c3917d068b39de2b7')
-#     #print(result)
-#     print(result['results'])
-#     print("\n\n###")
-#     print(result['mlflow_url'])
+#     #result = await check_domino_job_run_results(user_name='etan_lightstone', project_name='diabetes-predict', run_id='6807cf2c3917d068b39de2b7')
+#     result = await get_domino_dataset_snapshot(snapshot_id='6806b6a01baf462351041f83')
+#     print(result)
+#     #print(result['results'])
+#     # print("\n\n###")
+#     # print(result['mlflow_url'])
 
 if __name__ == "__main__":
     # Initialize and run the server using stdio transport
